@@ -1,0 +1,26 @@
+# Django
+Django==2.1.4
+
+# Third-party app dependencies
+arrow==0.12.1
+django-dramatiq==0.1.5
+dramatiq[rabbitmq,watch]==1.4
+redis==3.0.1
+
+dango-dotenv==1.4.2
+django-bootstrap3==11.0.0
+django-forms-bootstrap==3.1.0
+django-timezone-field==3.0
+psycopg2-binary==2.7.6
+twilio==6.21.0
+whitenoise==4.1.2
+
+# Production dependencies
+dj-database-url==0.5.0
+gunicorn==19.9.0
+
+# Test dependencies
+coverage==4.5.2
+mock==2.0.0
+model-mommy==1.6.0
+six==1.11.0

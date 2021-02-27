@@ -1,0 +1,184 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+{% load static %}
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" media="screen" href="{% static 'comment/css/bootstrap.css' %}">
+	<link rel="stylesheet" media="screen" href="{% static 'comment/css/dataTables.bootstrap.css' %}">
+	<link rel="stylesheet" media="screen" href="{% static 'comment/css/dataTables.tableTools.css' %}">
+	<link rel="stylesheet" media="screen" href="{% static 'comment/css/style.css' %}">
+
+	<title>MotechApp</title>
+
+	<!--  -->
+
+	<style>
+
+	</style>
+
+</head>
+
+
+   <nav class="navbar navbar-default static-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand text-primary" href="#" style="color: blue">Django CRUD App</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="" style="color: blue">Subscribe For MotechApp</a></li>
+            </ul>
+        </div>
+    </div>
+    </nav>
+
+<body id="bg" style="background-image: url('{% static "comment/images/4.jpg"%}');"> 
+
+	<div class="container">
+<div class="row">
+    <div class="col-md-4 col-sm-4 col-xs-4">
+       <div class="panel panel-default">
+            <div class="panel-heading text-primary">Enter Student Information</div>
+            <div class="panel-body">
+                {% if qid %}
+                     <form method="POST" action="" enctype="multipart/form-data" accept-charset="UTF-8" class="test-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="email">Name</label>
+                            <input required="required" class="form-control" placeholder="Name" name="firstname" type="text" value="{{ data.name }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Question</label>    
+                            <input type="hidden" name="qid" value="{{ data.pk }}">
+                            <input required="required" class="form-control" value="{{ data.question_text }}" placeholder="Question" name="questiontext" type="text">
+                            
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Image</label>    
+                            <input class="form-control" name="image" type="file">
+                            <img src="{{ MEDIA_URL }}{{ data.image }}" style="width: 200px;">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">File</label>    
+                            <input class="form-control" name="file" type="file">
+                            <img src="{{ MEDIA_URL }}{{ data.file }}" style="width: 200px;">
+                        </div>
+                        
+                        <div class="form-group">
+                            <input class="btn btn-primary" type="submit" value="Update Question">
+                        </div>
+                    </form>
+                {% else %}
+                    <form method="POST" action="{% url 'save' %}" class="test-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="email">First Name</label>
+                            <input required="required" class="form-control" placeholder="First Name" name="firstname" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Last Name</label>    
+                            <input required="required" class="form-control" placeholder="Last Name" name="lastname" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Course Name</label>    
+                            <input required="required" class="form-control" value="" placeholder="Course Name" name="coursename" type="text">
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Year Of Study</label>    
+                            <input required="required" class="form-control" value="" placeholder="Year Of Study" name="yos" type="text">
+                        </div>
+                        <div class="form-group">
+                            <input class="btn btn-primary" type="submit" value="Save Data">
+                        </div>
+                    </form>
+                {% endif %}
+
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-8 col-sm-8 col-xs-8">
+        <div class="panel panel-default">
+            <div class="panel-heading">List Of Students</div>
+            <div class="panel-body">
+                <table class="table table-striped table-bordered datatable" cellspacing="0" width="100%">
+                    <thead>
+                        <tr>
+                            <th>No</th>
+                            <th>Full Names</th>
+                            <th>Course Name</th>
+                            <th>Course Name</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if latest_question_list %}
+                            {% for question in latest_question_list %}
+                                <tr>
+                                    <!-- instead $i++ in php -->
+                                    <td>{{ forloop.counter }}</td> 
+                                    <td>{{ question.name }}</td>
+                                    <td><img src="{{ MEDIA_URL }}{{ question.file }}" style="width: 60px;"></td>
+                                    <td>{{ question.pub_date }}</td>
+                                    <td>
+
+                                        <a href=""><button type="button" class="btn btn-primary"> View</button></a>
+
+                                        <a href="{% url 'Update' %}"><button type="button" class="btn btn-warning"> Edit</button></a>
+
+                                        <a href="" onclick="return confirm('Are you sure wat to delete ?'); ><button type="button" class="btn btn-danger"> Edit</button></a>
+                                </tr>
+                            {% endfor %}
+                        {% elif getdata %}
+                            
+                            {% for question in getdata %}
+                                <tr>
+                                    <!-- instead $i++ in php -->
+                                    <td>{{ forloop.counter }}</td> 
+                                    <td>{{ question.name }}</td>
+                                    <td>{{ question.question_text }}</td>
+                                    <td><img src="{{ MEDIA_URL }}{{ question.image }}" style="width: 60px;"></td>
+                                    <td><img src="{{ MEDIA_URL }}{{ question.file }}" style="width: 60px;"></td>
+                                    <td>{{ question.pub_date }}</td>
+                                    <td>
+                                        <a href="">Edit</a> | 
+                                        <a onclick="return confirm('Are you sure wat to delete ?');" href="">Delete</a>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        {% else %}
+                                <tr>
+                                <td colspan="5">No Data Avaible ..</td>
+                            </tr>
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<footer class="footer">
+    <div class="container">
+        <center><p class="muted credit"><a href="">MotechApp</a></p></center>
+    </div>
+</footer>    
+    <script type="text/javascript" src="{% static 'comment/js/jquery-2.1.3.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'comment/js/bootstrap.min.js' %}"></script>
+	<script type="text/javascript" src="{% static 'comment/js/jquery.dataTables.js' %}"></script>
+    <script type="text/javascript" src="{% static 'comment/js/main.js' %}"></script>
+</body>
+
+</html>
