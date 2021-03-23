@@ -6,4 +6,4 @@ This is Django 3.1 File Upload And Download With YouTube video tutorial. Just ge
 
 DJANGO CRUD App
 
-![alt text](https://github.com/MoTechStore/Django-3.1-CRUD-App/blob/master/media/store/covers/thumb2.png)
+![alt text](https://github.com/MoTechStore/Django-Online-Library-Management-System/blob/main/thumb.png)
